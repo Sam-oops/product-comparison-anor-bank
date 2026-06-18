@@ -1,0 +1,16 @@
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.label input:disabled {
+  cursor: not-allowed;
+}
+
+.label:has(input:disabled) {
+  color: #aaa;
+}
