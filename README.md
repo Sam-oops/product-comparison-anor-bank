@@ -1,73 +1,44 @@
-# React + TypeScript + Vite
+# Product Comparison Widget
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Одностраничное приложение для сравнения ноутбуков. Пользователь выбирает до 3 ноутбуков из
+каталога и сравнивает их характеристики в таблице; строки, где значения выбранных ноутбуков
+отличаются, подсвечиваются.
 
-Currently, two official plugins are available:
+## Возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Выбор до **3** ноутбуков для сравнения (чекбокс на карточке; при достижении лимита лишние
+  чекбоксы блокируются).
+- Выбранные ноутбуки показываются таблицей — характеристики по строкам, ноутбуки по столбцам.
+- Строки, где значения отличаются, визуально выделены.
+- Любой ноутбук можно убрать из сравнения или очистить весь выбор сразу.
+- Выбор сохраняется при перезагрузке страницы (localStorage).
 
-## React Compiler
+## Технологии
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19**, **TypeScript** и **Vite** — UI, типизация и сборка
+- **TanStack Query** — загрузка и кэширование данных
+- **Zustand** с персистом — состояние выбора
+- **CSS Modules** — стили
 
-## Expanding the ESLint configuration
+## Архитектура
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Код организован по методологии Feature-Sliced Design и разложен по слоям: `app`, `pages`,
+`widgets`, `features`, `entities`, `shared`. Зависимости идут строго вниз, а каждый слайс
+отдаёт наружу публичный API через свой `index.ts`. Алиас `@` указывает на папку `src`.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Серверное состояние (список товаров) и клиентское (выбор) разделены: товары грузятся через
+TanStack Query из мок-API с искусственной задержкой, а id выбранных ноутбуков хранятся в
+небольшом Zustand-сторе с сохранением в localStorage.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Запуск
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev      # дев-сервер
+npm run build    # прод-сборка
+npm run preview  # просмотр сборки
+npm run lint     # линтер
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Приложение использует мок-данные с искусственной задержкой загрузки, сохраняет выбор
+пользователя в localStorage и подсвечивает строки таблицы, где выбранные ноутбуки отличаются.
