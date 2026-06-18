@@ -1,0 +1,20 @@
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comparisonHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
