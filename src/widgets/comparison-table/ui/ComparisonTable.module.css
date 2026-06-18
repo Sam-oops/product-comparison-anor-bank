@@ -1,0 +1,49 @@
+.empty {
+  margin: 0;
+  color: #777;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #e4e6ef;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  padding: 12px 16px;
+  font-size: 14px;
+  text-align: left;
+  border-bottom: 1px solid #eef0f6;
+}
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.specLabel {
+  font-weight: 500;
+  color: #777;
+  white-space: nowrap;
+}
+
+.productHead {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.productHead span {
+  margin-right: 8px;
+}
+
+.different {
+  background: #fff8e1;
+}
+
+.different .specLabel {
+  color: #8a6d00;
+}
